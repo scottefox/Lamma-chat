@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLaMA Web Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #1e1e1e; color: #fff; margin: 0; }
+    #chat { max-width: 600px; margin: auto; padding: 10px; }
+    .message { padding: 8px; margin: 5px 0; border-radius: 5px; }
+    .user { background: #007acc; text-align: right; }
+    .bot { background: #444; text-align: left; }
+    #inputBox { display: flex; padding: 10px; }
+    #inputBox input { flex: 1; padding: 10px; border: none; border-radius: 5px; }
+    #inputBox button { padding: 10px 20px; border: none; background: #007acc; color: white; border-radius: 5px; margin-left: 5px; }
+  </style>
+</head>
+<body>
+  <div id="chat">
+    <h2>LLaMA Web Chat</h2>
+    <div id="messages"></div>
+    <div id="inputBox">
+      <input id="userInput" type="text" placeholder="Type your message..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import init, { llama_response } from "https://unpkg.com/llama-web@latest/dist/llama-web.js";
+
+    let modelReady = false;
+
+    async function loadModel() {
+      addMessage("bot", "Loading LLaMA model in your browser... please wait ⏳");
+      await init();
+      modelReady = true;
+      addMessage("bot", "Model loaded! You can start chatting. 🤖");
+    }
+
+    function addMessage(sender, text) {
+      const msg = document.createElement("div");
+      msg.className = "message " + sender;
+      msg.textContent = text;
+      document.getElementById("messages").appendChild(msg);
+      msg.scrollIntoView();
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      addMessage("user", text);
+      input.value = "";
+
+      if (!modelReady) {
+        addMessage("bot", "Model is still loading, please wait...");
+        return;
+      }
+
+      const response = await llama_response(text);
+      addMessage("bot", response);
+    }
+
+    loadModel();
+  </script>
+</body>
+</html>
