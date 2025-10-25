@@ -1,0 +1,38 @@
+# Environment variables
+.env
+local.settings.json
+
+# Azure Functions
+api/bin
+api/obj
+api/.azurefunctions
+api/__blobstorage__
+api/__queues__
+api/__azurite_db*__.json
+api/.python_packages
+api/node_modules
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Azure
+.azure/

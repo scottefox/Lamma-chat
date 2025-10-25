@@ -1,0 +1,17 @@
+{
+  "name": "lamma-chat-azure-api",
+  "version": "1.0.0",
+  "description": "Azure Functions backend for Lamma Chat with Claude API integration",
+  "main": "index.js",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.1",
+    "@azure/functions": "^4.0.0"
+  },
+  "devDependencies": {
+    "azure-functions-core-tools": "^4.0.5611"
+  }
+}

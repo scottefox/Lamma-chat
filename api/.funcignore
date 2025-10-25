@@ -1,0 +1,14 @@
+*.js.map
+*.ts
+.git*
+.vscode
+local.settings.json
+test
+tsconfig.json
+.funcignore
+.gitignore
+node_modules
+.editorconfig
+.env
+.env.*
+README.md
