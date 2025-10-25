@@ -1,0 +1,123 @@
+" Vim configuration for MyApp Xcode project
+" Source this file in your main .vimrc or use with vim-localvimrc plugin
+
+" ============================================================================
+" Xcode Project Settings
+" ============================================================================
+
+" Set workspace and project files
+let g:xcode_workspace_file = 'MyApp.xcworkspace'
+let g:xcode_project_file = 'MyApp.xcodeproj'
+let g:xcode_default_scheme = 'MyApp'
+
+" Default simulator
+let g:xcode_default_simulator = 'iPhone 15'
+
+" ============================================================================
+" Build Commands
+" ============================================================================
+
+" Format output with xcpretty if available
+let g:xcode_xcpretty_flags = '--no-utf --color'
+let g:xcode_xcpretty_testing_flags = '--test'
+
+" Use vim-tmux-runner or dispatch for async builds
+let g:xcode_runner_command = '! {cmd}'
+
+" Ignore test/demo schemes
+let g:xcode_scheme_ignore_pattern = 'Demo|Tests'
+
+" ============================================================================
+" Custom Key Mappings
+" ============================================================================
+
+" Build the project
+nnoremap <leader>xb :!./build.sh<CR>
+
+" Build and run
+nnoremap <leader>xr :!./build.sh -r<CR>
+
+" Clean build
+nnoremap <leader>xc :!./build.sh -c<CR>
+
+" Run tests
+nnoremap <leader>xt :!./build.sh -t<CR>
+
+" List simulators
+nnoremap <leader>xl :!./build.sh -l<CR>
+
+" Open in Xcode
+nnoremap <leader>xo :!open MyApp.xcodeproj<CR>
+
+" ============================================================================
+" File Navigation
+" ============================================================================
+
+" Quick access to Swift files
+nnoremap <leader>fc :e MyApp/ContentView.swift<CR>
+nnoremap <leader>fa :e MyApp/MyApp.swift<CR>
+
+" ============================================================================
+" Swift Syntax and Formatting
+" ============================================================================
+
+" Set filetype for Swift files
+autocmd BufNewFile,BufRead *.swift set filetype=swift
+
+" Use 4 spaces for Swift (Xcode default)
+autocmd FileType swift setlocal shiftwidth=4 tabstop=4 expandtab
+
+" Enable syntax highlighting
+syntax on
+
+" ============================================================================
+" Build Integration
+" ============================================================================
+
+" Set makeprg for :make command
+set makeprg=./build.sh
+
+" Error format for Xcode output
+set errorformat=%f:%l:%c:\ %t%*[^:]:\ %m
+
+" ============================================================================
+" Helpful Commands
+" ============================================================================
+
+" Command to build project
+command! XcodeBuild !./build.sh
+command! XcodeRun !./build.sh -r
+command! XcodeClean !./build.sh -c
+command! XcodeTest !./build.sh -t
+command! XcodeOpen !open MyApp.xcodeproj
+
+" ============================================================================
+" Status Line
+" ============================================================================
+
+" Add build status to statusline if you want
+" set statusline+=%{exists('g:xcode_last_build')?g:xcode_last_build:''}
+
+" ============================================================================
+" Tips
+" ============================================================================
+"
+" Key mappings (with <leader> = \):
+"   \xb  - Build project
+"   \xr  - Build and run
+"   \xc  - Clean build
+"   \xt  - Run tests
+"   \xl  - List simulators
+"   \xo  - Open in Xcode
+"   \fc  - Open ContentView.swift
+"   \fa  - Open MyApp.swift
+"
+" Commands:
+"   :XcodeBuild  - Build the project
+"   :XcodeRun    - Build and run
+"   :XcodeClean  - Clean build folder
+"   :XcodeTest   - Run tests
+"   :XcodeOpen   - Open in Xcode
+"
+" Use :make to build using the build.sh script
+" ============================================================================
